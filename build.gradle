@@ -24,10 +24,10 @@ test {
 }
 
 dependencies {
-    testCompile 'org.junit.jupiter:junit-jupiter-api:5.7.0',
+    testCompile 'io.rest-assured:rest-assured:4.3.3',
+            'org.junit.jupiter:junit-jupiter-api:5.7.0',
             'org.junit.jupiter:junit-jupiter-engine:5.7.0',
-            'io.qameta.allure:allure-junit5:2.13.8',
-            'io.rest-assured:rest-assured:4.3.3'
+            'io.qameta.allure:allure-junit5:2.13.8'
 
     compile 'io.qameta.allure:allure-rest-assured:2.13.8',
             'com.fasterxml.jackson.core:jackson-databind:2.12.1'
