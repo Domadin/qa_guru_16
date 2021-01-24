@@ -75,12 +75,24 @@ public class ApiTests {
     }
 
     @Test
+    void testDeleteUser() {
+        given()
+                .when()
+                .delete("/users/2")
+
+                .then()
+                .statusCode(SC_NO_CONTENT)
+                .body(is(emptyOrNullString()));
+    }
+
+    @Test
     void testCreateUser() {
         String request = """
                 {
                     "name": "morpheus",
                     "job": "leader"
-                }""";
+                }
+                """;
 
         given()
                 .body(request)
@@ -95,5 +107,22 @@ public class ApiTests {
                 .body("name", is("morpheus"))
                 .body("job", is("leader"))
                 .body("id", not(empty()));
+    }
+
+    @Test
+    void unsuccessfulRegistration() {
+        Map<String, String> request = Map.of("email", "sydney");
+
+        given()
+                .body(request)
+                .contentType(JSON)
+
+                .when()
+                .post("/register")
+
+                .then()
+                .statusCode(SC_BAD_REQUEST)
+                .contentType(JSON)
+                .body("error", is("Missing password"));
     }
 }
