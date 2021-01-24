@@ -37,6 +37,8 @@ public class ApiTests {
                 .then()
                 .statusCode(SC_OK)
                 .contentType(JSON)
+                .body("per_page", is(6))
+                .body("data.id", hasSize(6))
                 .extract().as(Users.class);
 
         int usersPerPage = users.getPerPage();
@@ -51,12 +53,7 @@ public class ApiTests {
                 .queryParam("page", 2)
 
                 .when()
-                .get("/users")
-
-                .then()
-                .body("per_page", is(6))
-                .body("data.id", hasSize(6))
-                .extract().response();
+                .get("/users");
 
         int usersPerPage = response.path("per_page");
         int actualUsersOnPage = response.path("data.id.size()");
@@ -72,7 +69,9 @@ public class ApiTests {
 
                 .then()
                 .statusCode(SC_NOT_FOUND)
-                .body("isEmpty()", is(true));
+                //Несколько способов проверки, что тело пустое
+                .body("isEmpty()", is(true))
+                .body("size()", is(0));
     }
 
     @Test
